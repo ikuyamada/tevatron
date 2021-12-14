@@ -2,6 +2,7 @@ import os
 from itertools import repeat
 from typing import Dict, List, Tuple, Optional, Any, Union
 
+from transformers import BatchEncoding
 from transformers.trainer import Trainer
 
 import torch
@@ -39,6 +40,8 @@ class DenseTrainer(Trainer):
         for x in inputs:
             if isinstance(x, torch.Tensor):
                 prepared.append(x.to(self.args.device))
+            elif isinstance(x, BatchEncoding):
+                prepared.append(super()._prepare_inputs(x.data))
             else:
                 prepared.append(super()._prepare_inputs(x))
         return prepared

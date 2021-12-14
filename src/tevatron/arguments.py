@@ -33,6 +33,7 @@ class ModelArguments:
     add_pooler: bool = field(default=False)
     projection_in_dim: int = field(default=768)
     projection_out_dim: int = field(default=768)
+    attention_window: Optional[int] = field(default=None)
 
 
 @dataclass

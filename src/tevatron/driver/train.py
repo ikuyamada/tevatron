@@ -65,6 +65,10 @@ def main():
         num_labels=num_labels,
         cache_dir=model_args.cache_dir,
     )
+
+    if model_args.attention_window is not None:
+        config.attention_window = [model_args.attention_window] * config.num_hidden_layers
+
     tokenizer = AutoTokenizer.from_pretrained(
         model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
         cache_dir=model_args.cache_dir,
@@ -107,9 +111,10 @@ def main():
     )
     train_dataset.trainer = trainer
 
-    trainer.train(
-        model_path=model_args.model_name_or_path if os.path.isdir(model_args.model_name_or_path) else None
-    )
+    trainer.train()
+    # trainer.train(
+    #     model_path=model_args.model_name_or_path if os.path.isdir(model_args.model_name_or_path) else None
+    # )
     trainer.save_model()
     if trainer.is_world_process_zero():
         tokenizer.save_pretrained(training_args.output_dir)

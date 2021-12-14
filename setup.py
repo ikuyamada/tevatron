@@ -12,7 +12,8 @@ setup(
     description='Tevatron: A toolkit for learning and running deep dense retrieval models.',
     python_requires='>=3.7',
     install_requires=[
-        "transformers>=4.3.0,<=4.9.2",
-        "datasets>=1.1.3"
+        "transformers>=4.3.0",
+        "datasets>=1.1.3",
+        "faiss-cpu>=1.7.1"
     ]
 )
